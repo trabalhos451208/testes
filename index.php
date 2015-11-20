@@ -3,24 +3,11 @@
 <?php
 
     session_start();
-
-    if (isset($_POST["nome"]) and isset($_POST["senha"])){
-        $nome = $_POST["nome"];
-        $senha = $_POST["senha"];
-        if($nome === $_SESSION["nome"] and $senha === $_SESSION["senha"]) {
-            header("Location: cinema.php");
-        }
-    }
-    if(empty($_COOKIE["nome"]) && isset($_POST["nome"])){
-        $cookie_nome = $_POST["nome"];
-        $cookie_valor_nome = "nome";
-        setcookie($cookie_valor_nome, $cookie_nome, time() + (86400 * 30), "/"); // 86400 = 1 dia
-    }
-    if(empty($_COOKIE["senha"]) && isset($_POST["senha"])){
-        $cookie_senha = $_POST["senha"];
-            $cookie_value_senha = "senha";
-            setcookie($cookie_value_senha, $cookie_senha, time() + (86400 * 30), "/");
-    }
+    
+    login();
+    salvar_nome();
+    salvar_senha();
+    apagar();
 ?>
 
     <h1>Cinema</h1>
@@ -29,6 +16,9 @@
     <form method="post">
         Nome:<input type="text" value="<?php valor_nome(); ?>" name="nome" />
         Senha:<input type="password" value="<?php valor_senha(); ?>" name="senha" />
+        Salvar:<input type="checkbox" name="salvar" value="salvar" />
+        Esquecer:<input type="checkbox" name="esquecer" value="esquecer" />
+        <br/>
         <input type="submit" value="entrar" class="tiny button" />
     </form>
     <hr/>
