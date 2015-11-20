@@ -2,23 +2,25 @@
 
 <?php
 
-session_start();
+    session_start();
 
-if (isset($_POST["nome"]) and isset($_POST["senha"])){
-    $nome = $_POST["nome"];
-    $senha = $_POST["senha"];
-    if($nome === $_SESSION["nome"] and $senha === $_SESSION["senha"]) {
-        header("Location: cinema.php");
+    if (isset($_POST["nome"]) and isset($_POST["senha"])){
+        $nome = $_POST["nome"];
+        $senha = $_POST["senha"];
+        if($nome === $_SESSION["nome"] and $senha === $_SESSION["senha"]) {
+            header("Location: cinema.php");
+        }
     }
-}
-if(empty($_SESSION["cont"])){
-            $_SESSION["cont"] = 1;
-        }else{
-            $_SESSION["cont"]++;
-        }
-        if($_SESSION["cont"] == 2){
-            $_SESSION["cont"] = 2;
-        }
+    if(empty($_COOKIE["nome"]) && isset($_POST["nome"])){
+        $cookie_nome = $_POST["nome"];
+        $cookie_valor_nome = "nome";
+        setcookie($cookie_valor_nome, $cookie_nome, time() + (86400 * 30), "/"); // 86400 = 1 dia
+    }
+    if(empty($_COOKIE["senha"]) && isset($_POST["senha"])){
+        $cookie_senha = $_POST["senha"];
+            $cookie_value_senha = "senha";
+            setcookie($cookie_value_senha, $cookie_senha, time() + (86400 * 30), "/");
+    }
 ?>
 
     <h1>Cinema</h1>
